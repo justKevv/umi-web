@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Tickets</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Movie Ticketing</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="booking.html" aria-current="page">Book Tickets</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="booking">
+            <div class="container">
+                <h2>Choose a movie to start your booking</h2>
+                <p class="intro">Tap a movie card below to see the available seats and confirm your tickets.</p>
+                <div class="movie-options">
+                    <button type="button" class="movie-option" data-movie="Midnight City" data-time="Today · 7:30 PM">
+                        <img src="assets/movie1.jpg" alt="Midnight City poster">
+                        <span>Midnight City</span>
+                    </button>
+                    <button type="button" class="movie-option" data-movie="Ocean Quest" data-time="Today · 9:00 PM">
+                        <img src="assets/movie2.jpg" alt="Ocean Quest poster">
+                        <span>Ocean Quest</span>
+                    </button>
+                    <button type="button" class="movie-option" data-movie="Sky High" data-time="Tomorrow · 6:15 PM">
+                        <img src="assets/movie3.jpg" alt="Sky High poster">
+                        <span>Sky High</span>
+                    </button>
+                </div>
+                <form id="booking-form" hidden>
+                    <h3 id="selected-movie"></h3>
+                    <p id="selected-time" class="selected-time"></p>
+                    <label for="seats">Number of seats</label>
+                    <input type="number" id="seats" name="seats" min="1" max="10" value="1" required>
+                    <button type="submit" class="btn">Book now</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script>
+        const movieOptions = document.querySelectorAll('.movie-option');
+        const bookingForm = document.getElementById('booking-form');
+        const selectedMovie = document.getElementById('selected-movie');
+        const selectedTime = document.getElementById('selected-time');
+
+        movieOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                movieOptions.forEach(button => button.classList.remove('active'));
+                option.classList.add('active');
+
+                selectedMovie.textContent = `Booking for: ${option.dataset.movie}`;
+                selectedTime.textContent = option.dataset.time;
+                bookingForm.hidden = false;
+            });
+        });
+
+        bookingForm.addEventListener('submit', event => {
+            event.preventDefault();
+            alert(`Your seats for ${selectedMovie.textContent.replace('Booking for: ', '')} are reserved!`);
+            bookingForm.reset();
+            bookingForm.hidden = true;
+            movieOptions.forEach(button => button.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>
